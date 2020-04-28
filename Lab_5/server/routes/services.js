@@ -1,10 +1,10 @@
 var express = require('express')
 var router = express.Router()
-const Clients = require('../models/Clients')
+const Services = require('../models/Services')
 
-// Get All Clinets
-router.get('/clients', (req, res, next) => {
-  Clients.findAll()
+// Get All Services
+router.get('/services', (req, res, next) => {
+  Services.findAll()
     .then(tasks => {
       res.json(tasks)
     })
@@ -13,16 +13,16 @@ router.get('/clients', (req, res, next) => {
     })
 })
 
-router.post('/client', (req, res, next) => {
+router.post('/service', (req, res, next) => {
   if (!req.body.name) {
     res.status(400)
     res.json({
       error: 'Bad Data'
     })
   } else {
-    Clients.create(req.body)
+    Services.create(req.body)
       .then(() => {
-        res.send('Clients Added!')
+        res.send('Services Added!')
       })
       .catch(err => {
         res.send('error: ' + err)
@@ -30,22 +30,22 @@ router.post('/client', (req, res, next) => {
   }
 })
 
-router.delete('/client/:id', (req, res, next) => {
-  Clients.destroy({
+router.delete('/service/:id', (req, res, next) => {
+  Services.destroy({
     where: {
       id: req.params.id
     }
   })
     .then(() => {
-      res.send('Clients deleted!')
+      res.send('Services deleted!')
     })
     .catch(err => {
       res.send('error: ' + err)
     })
 })
 
-// Update Clients
-router.put('/client/:id', (req, res, next) => {
+// Update Services
+router.put('/service/:id', (req, res, next) => {
 	console.log(req.body);
 	
 	
@@ -55,12 +55,12 @@ router.put('/client/:id', (req, res, next) => {
       error: 'Bad Data'
     })
   } else {
-    Clients.update(
+    Services.update(
       { name: req.body.name, data: req.body.data  },
       { where: { id: req.params.id } }
     )
       .then(() => {
-        res.send('Clients Updated!')
+        res.send('App Updated!')
       })
       .error(err => handleError(err))
   }
