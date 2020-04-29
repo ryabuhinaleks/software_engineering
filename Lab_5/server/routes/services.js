@@ -56,7 +56,7 @@ router.put('/service/:id', (req, res, next) => {
     })
   } else {
     Services.update(
-      { name: req.body.name, data: req.body.data  },
+      { name: req.body.name, price: req.body.price  },
       { where: { id: req.params.id } }
     )
       .then(() => {
