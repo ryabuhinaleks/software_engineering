@@ -27,7 +27,7 @@ app.get("/sel", (req, res)=>
 	con.end();
 });
 
-//insert___http://localhost:8081/ins/?table=service&param1=repairs&param2=111
+//insert___http://localhost:8081/ins/?table=services&param1=repairs&param2=111
 app.get("/ins", (req, res)=>
 {
 	let con=connect();
