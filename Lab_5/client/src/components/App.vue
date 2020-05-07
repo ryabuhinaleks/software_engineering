@@ -4,22 +4,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto">
-          <h1 class="text-center">Таблица Applications</h1>
+          <h1 class="text-center">Товары</h1>
           <form v-on:submit.prevent="addNewClient">	  
-				<input v-model="nameCl" class="form-control" placeholder="Name">
-				<input v-model="DataCL" class="form-control" placeholder="Data">		
-			
-					<button v-if="this.isEdit == false" type="submit" style="width: 100%;">Добавить</button>
-					<button v-else type="button" v-on:click="update()" style="width: 100%;">Обновить</button>
-          </form>
+				<input v-model="numCl" class="form-control" placeholder="Серийный ключ">
+				<input v-model="ModelCL" class="form-control" placeholder="Модель">		
+				<input v-model="DescCl" class="form-control" placeholder="Описание">
+				<input v-model="YearCL" class="form-control" placeholder="Выпуск">	
+				<input v-model="SumCL" class="form-control" placeholder="Цена">	
+				
+				<button v-if="this.isEdit == false" type="submit" style="width: 100%;" class="btn btn-success btn-block  mt-3">Добавить</button>
+				<button v-else type="button" v-on:click="update()" style="width: 100%;"class="btn btn-primary btn-block  mt-3" >Обновить</button>
+           </form>
 		____________________________________________________________</p>
           <table class="table">
-            <tr v-for="(todo) in todos" v-bind:key="todo.id" v-bind:title="todo.name">
-              <td class="text-left">Name:{{todo.name}}</br>Data:{{todo.data}}</td>
+            <tr v-for="(todo) in todos" v-bind:key="todo.id" v-bind:title="todo.model">
+              <td class="text-left"><b>Серийный ключ: {{todo.id}}</b></br><b>Модель:</b> {{todo.model}}</br><b>Выпуск:</b> {{todo.year}}</br><b>Описание:</b> {{todo.description}}</br><b>Цена: {{todo.sum}} руб.</b></td>
 			  
               <td class="text-right">
-                <button v-on:click="editCl(todo.name,todo.data, todo.id)">Редактировать</button>
-                <button v-on:click="deleteCl(todo.id)" >Удалить</button>
+                <button v-on:click="editCl(todo.id,todo.model, todo.description, todo.year, todo.sum)" class=" btn btn-info ">Редактировать</button>
+                <button v-on:click="deleteCl(todo.id)"  class=" btn btn-danger" style="margin-top: 11px;">Удалить</button>
               </td>
             </tr>
           </table>
@@ -37,8 +40,11 @@
       return {
         todos: [],
         id: '',
-        nameCl: '',
-		DataCL: '',
+        numCl: '',
+		DescCl: '',	
+		ModelCL: '',
+		YearCL: '',
+		SumCL: '',
         isEdit: false
       }
     },
@@ -59,10 +65,13 @@
       },
       addNewClient() {
         axios.post('/app',
-          { name: this.nameCl, data: this.DataCL }
+          { id: this.numCl, model: this.ModelCL, description: this.DescCl, year:this.YearCL, sum:this.SumCL }
         ).then((res) => {
-          this.nameCl = ''
-		  this.DataCL = ''
+          this.numCl = ''
+		  this.ModelCL = ''
+		  this.YearCL = ''
+		  this.SumCL = ''
+		  this.DescCl = ''
           this.getTasks()
           console.log(res)
         }).catch((err) => {
@@ -70,19 +79,25 @@
         })
       },
 
-      editCl(title, dataa,id) {
-        this.id = id
-        this.nameCl = title
-		this.DataCL = dataa
+      editCl(id, model,desc, y, sum) {
+        this.numCl = id
+		this.id = id
+		this.ModelCL = model
+		this.DescCl = desc
+		this.YearCL = y
+		this.SumCL = sum
         this.isEdit = true
       },
 
       update() {
         axios.put(`/app/${this.id}`,
-          { name: this.nameCl, data: this.DataCL}
+          { id: this.numCl, model: this.ModelCL, description: this.DescCl, year:this.YearCL, sum:this.SumCL }
         ).then((res) => {
-          this.nameCl = ''
-		  this.DataCL = ''
+          this.numCl = ''
+		  this.ModelCL = ''
+		  this.DescCl = ''
+		  this.YearCL = ''
+		  this.SumCL = ''
           this.isEdit = false
           this.getTasks()
           console.log(res)
@@ -94,9 +109,11 @@
       deleteCl(id) {
         axios.delete(`/app/${id}`
         ).then((res) => {
-          this.nameCl = ''
-		  		  this.DataCL = ''
-
+          this.numCl = ''
+		  this.ModelCL = ''
+		  this.DescCl = ''
+		  this.YearCL = ''
+		  this.SumCL = ''
           this.getTasks()
           console.log(res)
         }).catch((err) => {

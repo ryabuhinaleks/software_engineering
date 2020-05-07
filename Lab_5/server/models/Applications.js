@@ -9,12 +9,20 @@ module.exports = db.sequelize.define(
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+	model: {
       type: Sequelize.STRING
     }
 	,
-    data: {
+    description: {
       type: Sequelize.STRING
+    }
+	,
+    year: {
+      type: Sequelize.INTEGER
+    }
+	,
+    sum: {
+      type: Sequelize.INTEGER
     }
   },
   {

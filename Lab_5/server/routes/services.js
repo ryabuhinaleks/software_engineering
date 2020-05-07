@@ -1,6 +1,8 @@
 var express = require('express')
 var router = express.Router()
 const Services = require('../models/Services')
+const Clients = require('../models/Clients')
+const Applications = require('../models/Applications')
 
 // Get All Services
 router.get('/services', (req, res, next) => {
@@ -13,16 +15,47 @@ router.get('/services', (req, res, next) => {
     })
 })
 
+router.get('/users', (req, res, next) => {
+  Clients.findAll()
+    .then(tasks => {
+      res.json(tasks)
+    })
+    .catch(err => {
+      res.send('error: ' + err)
+    })
+})
+
+router.get('/user', (req, res, next) => {
+  Clients.findAll()
+    .then(tasks => {
+      res.json(tasks)
+    })
+    .catch(err => {
+      res.send('error: ' + err)
+    })
+})
+
+router.get('/tovar', (req, res, next) => {
+  Applications.findAll()
+    .then(tasks => {
+      res.json(tasks)
+    })
+    .catch(err => {
+      res.send('error: ' + err)
+    })
+})
+
 router.post('/service', (req, res, next) => {
-  if (!req.body.name) {
+	console.log(req.body);
+  if (!req.body.date) {
     res.status(400)
     res.json({
-      error: 'Bad Data'
+      error: 'ERROR'
     })
   } else {
     Services.create(req.body)
       .then(() => {
-        res.send('Services Added!')
+        res.send('Услуга добавлена!')
       })
       .catch(err => {
         res.send('error: ' + err)
@@ -37,7 +70,7 @@ router.delete('/service/:id', (req, res, next) => {
     }
   })
     .then(() => {
-      res.send('Services deleted!')
+      res.send('Услуга удалена!')
     })
     .catch(err => {
       res.send('error: ' + err)
@@ -46,17 +79,15 @@ router.delete('/service/:id', (req, res, next) => {
 
 // Update Services
 router.put('/service/:id', (req, res, next) => {
-	console.log(req.body);
-	
-	
-  if (!req.body.name) {
+	console.log(req.body);	
+  if (!req.body.date) {
     res.status(400)
     res.json({
-      error: 'Bad Data'
+      error: 'Error'
     })
   } else {
     Services.update(
-      { name: req.body.name, price: req.body.price  },
+      { date: req.body.date, id_client: req.body.id_client, number:req.body.number, count:req.body.count   },
       { where: { id: req.params.id } }
     )
       .then(() => {

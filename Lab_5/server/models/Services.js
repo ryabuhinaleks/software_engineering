@@ -9,12 +9,20 @@ module.exports = db.sequelize.define(
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    date: {
+      type: Sequelize.DATE
+    }
+	,
+    id_client: {
+      type: Sequelize.INTEGER
+    }	
+	,
+    number: {
       type: Sequelize.STRING
     }
 	,
-    price: {
-      type: Sequelize.STRING
+    count: {
+      type: Sequelize.INTEGER
     }
   },
   {

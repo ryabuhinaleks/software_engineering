@@ -20,4 +20,13 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+body{
+	background-color:white;
+	background: url(./assets/bod.jpg) no-repeat;
+	width:100%;
+	height:100%;
+	background-size: cover;
+	background-attachment: fixed;
+	color:white;
+}
 </style>

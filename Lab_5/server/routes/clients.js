@@ -17,12 +17,12 @@ router.post('/client', (req, res, next) => {
   if (!req.body.name) {
     res.status(400)
     res.json({
-      error: 'Bad Data'
+      error: 'ERROR'
     })
   } else {
     Clients.create(req.body)
       .then(() => {
-        res.send('Clients Added!')
+        res.send('Клиент добавлен!')
       })
       .catch(err => {
         res.send('error: ' + err)
@@ -48,19 +48,18 @@ router.delete('/client/:id', (req, res, next) => {
 router.put('/client/:id', (req, res, next) => {
 	console.log(req.body);
 	
-	
   if (!req.body.name) {
     res.status(400)
     res.json({
-      error: 'Bad Data'
+      error: 'Error'
     })
   } else {
     Clients.update(
-      { name: req.body.name, data: req.body.data  },
+      { name: req.body.name, score: req.body.score, city: req.body.city, telephone: req.body.telephone  },
       { where: { id: req.params.id } }
     )
       .then(() => {
-        res.send('Clients Updated!')
+        res.send('Данные обновлены!')
       })
       .error(err => handleError(err))
   }

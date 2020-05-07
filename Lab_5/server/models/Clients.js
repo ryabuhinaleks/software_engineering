@@ -13,7 +13,15 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     }
 	,
-    data: {
+    score: {
+      type: Sequelize.STRING
+    }
+	,
+    city: {
+      type: Sequelize.STRING
+    }
+	,
+    telephone: {
       type: Sequelize.STRING
     }
   },
